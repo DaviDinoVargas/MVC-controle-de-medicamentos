@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "controle-de-medicamentos.WebApplication": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:53191;http://localhost:53192"
+    }
+  }
+}
