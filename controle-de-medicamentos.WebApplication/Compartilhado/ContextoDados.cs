@@ -4,6 +4,7 @@ using ControleDeMedicamentos.ConsoleApp.ModuloFornecedor;
 using ControleDeMedicamentos.ConsoleApp.ModuloMedicamento;
 using ControleDeMedicamentos.ConsoleApp.ModuloPrescricao;
 using ControleDeMedicamentos.ConsoleApp.ModuloFuncionario;
+using controle_de_medicamentos.WebApplication.ModuloPaciente;
 
 namespace GestaoDeEquipamentos.ConsoleApp.Compartilhado;
 
@@ -14,6 +15,8 @@ public class ContextoDados
     public List<Medicamento> Medicamentos { get; set; }
     public List<Prescricao> Prescricoes { get; set; }
     public List<Funcionario> Funcionarios { get; set; }
+    public List<Paciente> Pacientes { get; set; }
+
 
     private string pastaArmazenamento = "C:\\temp";
     private string arquivoArmazenamento = "dados.json";
@@ -24,6 +27,7 @@ public class ContextoDados
         Fornecedores = new List<Fornecedor>();
         Medicamentos = new List<Medicamento>();
         Prescricoes = new List<Prescricao>();
+        Pacientes = new List<Paciente>();
 
         Funcionarios = new List<Funcionario>();
     }
@@ -71,6 +75,7 @@ public class ContextoDados
         this.Fornecedores = contextoArmazenado.Fornecedores;
         this.Medicamentos = contextoArmazenado.Medicamentos;
         this.Prescricoes = contextoArmazenado.Prescricoes;
+        this.Pacientes = contextoArmazenado.Pacientes;
 
         this.Funcionarios = contextoArmazenado.Funcionarios;
     }

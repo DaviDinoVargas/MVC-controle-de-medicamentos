@@ -1,0 +1,50 @@
+﻿@* Views/Shared/_Sidebar.cshtml *@
+
+<nav class="sidebar" id="sidebar">
+    <ul class="menu">
+        <li class="toggle-container">
+            <button class="toggle-btn" onclick="toggleSidebar()">
+                <span id="toggle-icon" class="material-icons btn-arrow">keyboard_double_arrow_left</span>
+            </button>
+        </li>
+        <li class="active">
+            <a href="#">
+                <span class="material-icons">home</span>
+                <span class="menu-text">Início</span>
+            </a>
+        </li>
+        <li class="menu-item has-submenu">
+            <button class="menu-link" onclick="toggleSubmenu(this)">
+                <span class="material-icons">info</span>
+                <span class="menu-text">Sobre</span>
+                <span class="material-icons submenu-icon">keyboard_arrow_down</span>
+            </button>
+            <ul class="submenu">
+                <li><a href="#">Quem somos</a></li>
+                <li><a href="#">Equipe</a></li>
+            </ul>
+        </li>
+        <li class="menu-item has-submenu">
+            <button class="menu-link" onclick="toggleSubmenu(this)">
+                <span class="material-icons">build</span>
+                <span class="menu-text">Serviços</span>
+                <span class="material-icons submenu-icon">keyboard_arrow_down</span>
+            </button>
+            <ul class="submenu">
+                <li><a href="#">Consultoria</a></li>
+                <li><a href="#">Suporte</a></li>
+            </ul>
+        </li>
+        <li class="menu-item has-submenu">
+            <button class="menu-link" onclick="toggleSubmenu(this)">
+                <span class="material-icons">contact_mail</span>
+                <span class="menu-text">Contato</span>
+                <span class="material-icons submenu-icon">keyboard_arrow_down</span>
+            </button>
+            <ul class="submenu">
+                <li><a href="#">Fale conosco</a></li>
+                <li><a href="#">Localização</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>

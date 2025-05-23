@@ -1,10 +1,20 @@
-﻿namespace controle_de_medicamentos.WebApplication
+﻿namespace ControleDeMedicamentos.ConsoleApp
 {
-    internal class Program
+    class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddControllersWithViews();
+
+            WebApplication app = builder.Build();
+
+            app.UseStaticFiles();
+            app.UseRouting();
+            app.MapControllers();
+
+            app.Run();
         }
     }
 }
