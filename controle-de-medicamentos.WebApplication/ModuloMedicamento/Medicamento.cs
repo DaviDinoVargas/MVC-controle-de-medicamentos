@@ -11,16 +11,18 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloMedicamento
     public class Medicamento : EntidadeBase<Medicamento>
     {
         public string Nome { get; set; }
+        public decimal Valor { get; set; }
         public string Descricao { get; set; }
         public int Quantidade { get; set; }
         public Fornecedor Fornecedor { get; set; }
         public Medicamento() { }
         public List<string> SintomasTratados { get; set; }
-        public Medicamento(string nome, string descricao, int quantidade, Fornecedor fornecedor, List<string> sintomasTratados)
+        public Medicamento(string nome, string descricao, int quantidade, decimal valor, Fornecedor fornecedor, List<string> sintomasTratados)
         {
             Nome = nome;
             Descricao = descricao;
             Quantidade = quantidade;
+            Valor = valor;
             Fornecedor = fornecedor;
             SintomasTratados = sintomasTratados;
         }
@@ -30,8 +32,10 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloMedicamento
             Nome = registroEditado.Nome;
             Descricao = registroEditado.Descricao;
             Quantidade = registroEditado.Quantidade;
+            Valor = registroEditado.Valor;
             Fornecedor = registroEditado.Fornecedor;
         }
+
 
         public override string Validar()
         {
@@ -48,7 +52,8 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloMedicamento
 
             if (Fornecedor == null)
                 erros.Add("Um fornecedor válido deve ser selecionado.");
-
+            if (Valor <= 0)
+                erros.Add("O valor deve ser maior que zero.");
             return string.Join(Environment.NewLine, erros);
         }
 
