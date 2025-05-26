@@ -7,6 +7,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Views\ControladorMedicamento\Visualizar.cshtml~RF1813d85.TMP" />
+  </ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.ML" Version="3.0.0" />
 		<PackageReference Include="Microsoft.ML.FastTree" Version="3.0.0" />

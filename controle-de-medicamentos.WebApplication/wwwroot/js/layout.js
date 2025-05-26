@@ -9,7 +9,6 @@
         : 'keyboard_double_arrow_left';
 
     if (sidebar.classList.contains('collapsed')) {
-        // Fecha todos os submenus abertos
         document.querySelectorAll('.menu-item.has-submenu').forEach(item => {
             item.classList.remove('open');
             const submenuIcon = item.querySelector('.submenu-icon');

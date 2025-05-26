@@ -1,70 +1,90 @@
-﻿using ControleDeMedicamentos.ConsoleApp.ModuloFornecedor;
+﻿using ControleDeMedicamentos.ConsoleApp.Compartilhado;
+using ControleDeMedicamentos.ConsoleApp.ModuloFornecedor;
 using GestaoDeEquipamentos.ConsoleApp.Compartilhado;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 
-namespace ControleDeMedicamentos.ConsoleApp.ModuloMedicamento
+namespace ControleDeMedicamentos.ConsoleApp.ModuloMedicamento;
+
+public class Medicamento : EntidadeBase<Medicamento>
 {
-    public class Medicamento : EntidadeBase<Medicamento>
+    public string Nome { get; set; }
+    public string Descricao { get; set; }
+    public Fornecedor Fornecedor { get; set; }
+    public List<RequisicaoEntrada> RequisicoesEntrada { get; set; }
+    public List<RequisicaoSaida> RequisicoesSaida { get; set; }
+
+    public int QuantidadeEmEstoque
     {
-        public string Nome { get; set; }
-        public decimal Valor { get; set; }
-        public string Descricao { get; set; }
-        public int Quantidade { get; set; }
-        public Fornecedor Fornecedor { get; set; }
-        public Medicamento() { }
-        public List<string> SintomasTratados { get; set; }
-        public Medicamento(string nome, string descricao, int quantidade, decimal valor, Fornecedor fornecedor, List<string> sintomasTratados)
+        get
         {
-            Nome = nome;
-            Descricao = descricao;
-            Quantidade = quantidade;
-            Valor = valor;
-            Fornecedor = fornecedor;
-            SintomasTratados = sintomasTratados;
+            int quantidadeEmEstoque = 0;
+
+            foreach (var req in RequisicoesEntrada)
+                quantidadeEmEstoque += req.QuantidadeRequisitada;
+
+            foreach (var req in RequisicoesSaida)
+                quantidadeEmEstoque -= req.QuantidadeRequisitada;
+
+            return quantidadeEmEstoque;
         }
+    }
 
-        public override void AtualizarRegistro(Medicamento registroEditado)
-        {
-            Nome = registroEditado.Nome;
-            Descricao = registroEditado.Descricao;
-            Quantidade = registroEditado.Quantidade;
-            Valor = registroEditado.Valor;
-            Fornecedor = registroEditado.Fornecedor;
-        }
+    public bool EmFalta
+    {
+        get { return QuantidadeEmEstoque < 20; }
+    }
 
+    [ExcludeFromCodeCoverage]
+    public Medicamento()
+    {
+        RequisicoesEntrada = new List<RequisicaoEntrada>();
+        RequisicoesSaida = new List<RequisicaoSaida>();
+    }
 
-        public override string Validar()
-        {
-            List<string> erros = new();
+    public Medicamento(
+        string nome,
+        string descricao,
+        Fornecedor fornecedor
+    ) : this()
+    {
+        Id = Guid.NewGuid();
+        Nome = nome;
+        Descricao = descricao;
+        Fornecedor = fornecedor;
+    }
 
-            if (string.IsNullOrWhiteSpace(Nome) || Nome.Length < 3 || Nome.Length > 100)
-                erros.Add("O nome deve conter entre 3 e 100 caracteres.");
+    public void AdicionarAoEstoque(RequisicaoEntrada requisicaoEntrada)
+    {
+        if (!RequisicoesEntrada.Contains(requisicaoEntrada))
+            RequisicoesEntrada.Add(requisicaoEntrada);
+    }
 
-            if (string.IsNullOrWhiteSpace(Descricao) || Descricao.Length < 5 || Descricao.Length > 255)
-                erros.Add("A descrição deve conter entre 5 e 255 caracteres.");
+    public void RemoverDoEstoque(RequisicaoSaida requisicaoSaida)
+    {
+        if (!RequisicoesSaida.Contains(requisicaoSaida))
+            RequisicoesSaida.Add(requisicaoSaida);
+    }
 
-            if (Quantidade < 0)
-                erros.Add("A quantidade não pode ser negativa.");
+    public override void AtualizarRegistro(Medicamento registroEditado)
+    {
+        Nome = registroEditado.Nome;
+        Descricao = registroEditado.Descricao;
+        Fornecedor = registroEditado.Fornecedor;
+    }
 
-            if (Fornecedor == null)
-                erros.Add("Um fornecedor válido deve ser selecionado.");
-            if (Valor <= 0)
-                erros.Add("O valor deve ser maior que zero.");
-            return string.Join(Environment.NewLine, erros);
-        }
+    public override string Validar()
+    {
+        string erros = string.Empty;
 
-        public string ObterStatusEstoque()
-        {
-            return Quantidade < 20 ? "EM FALTA" : "Disponível";
-        }
+        if (string.IsNullOrEmpty(Nome.Trim()))
+            erros += "O campo \"Nome\" é obrigatório.";
 
-        public override string ToString()
-        {
-            return $"ID: {Id} | Nome: {Nome} | Qtd: {Quantidade} | Status: {ObterStatusEstoque()} | Fornecedor: {Fornecedor.Nome}";
-        }
+        if (string.IsNullOrEmpty(Descricao.Trim()))
+            erros += "O campo \"Descrição\" é obrigatório.";
+
+        if (Fornecedor == null)
+            erros += "O campo \"Fornecedor\" é obrigatório.";
+
+        return erros;
     }
 }

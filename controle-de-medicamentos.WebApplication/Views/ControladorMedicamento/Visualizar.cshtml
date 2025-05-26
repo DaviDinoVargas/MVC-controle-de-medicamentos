@@ -1,0 +1,77 @@
+﻿@using System.Text.Json
+@using ControleDeMedicamentos.ConsoleApp.Model
+@using ControleDeMedicamentos.ConsoleApp.ModuloMedicamento
+
+@model VisualizarMedicamentosViewModel
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Medicamentos";
+}
+<link rel="stylesheet" href="~/css/tabela.css" />
+
+<main class="dashboard">  
+
+    <div class="filters-container">
+        <input type="text" id="searchInput" placeholder="Pesquisar por nome..." />
+        <select id="sortFilter">
+            <option value="recent">Mais Recentes</option>
+            <option value="oldest">Mais Antigos</option>
+            <option value="valorMaior">Maior Valor</option>
+            <option value="valorMenor">Menor Valor</option>
+        </select>
+        <div class="action-buttons">
+            <a class="btn-delete" href="/medicamentos/excluirMultiplos">
+                <span class="material-icons">delete</span>
+            </a>
+            <a class="btn-add" href="/medicamentos/cadastrar">
+                <span class="material-icons">add</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="card grande1 medicamentos-container">
+        <div class="medicamentos-list">
+            @foreach (var m in Model.Registros)
+            {
+                <div class="medicamento-item">
+                    <div class="medicamento-content">
+                        <input type="checkbox" class="checkbox" name="selecionados" value="@m.Id" />
+                        <div class="medicamento-info">
+                            <span class="info-id"><strong>ID:</strong> @m.Id</span>
+                            <span class="info-nome"><strong>Nome:</strong> @m.Nome</span>
+                            <span class="info-fornecedor"><strong>Fornecedor:</strong> @(m.NomeFornecedor ?? "Sem fornecedor")</span>
+                            <span class="info-status">
+                                <strong>Status:</strong>
+                                @* <span class="@(m.Quantidade < 20 ? "status-alerta" : "status-ok")">
+                                    @(m.Quantidade < 20 ? "EM FALTA" : "Disponível")
+                                </span> *@
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="medicamento-actions">
+                        <button class="menu-btn">
+                            <span class="material-icons">more_vert</span>
+                        </button>
+                        <div class="menu-dropdown">
+                            <a href="/medicamentos/editar/@m.Id">Editar</a>
+                            <a href="/medicamentos/excluir/@m.Id">Excluir</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</main>
+
+@{
+    var jsonOptions = new JsonSerializerOptions { PropertyNamingPolicy = null };
+    var dadosJson = JsonSerializer.Serialize(Model.Registros, jsonOptions);
+}
+
+<script>
+    const medicamentos = @Html.Raw(dadosJson);
+</script>
+
+<script src="~/js/filtrarMedicamentos.js"></script>

@@ -12,6 +12,8 @@ namespace ControleDeMedicamentos.ConsoleApp
     {
         public interface IRepositorioMedicamento : IRepositorio<Medicamento>
         {
+            void EditarRegistro(Guid id, Medicamento registroEditado);
+            object SelecionarRegistroPorId(Guid id);
         }
     }
 }
