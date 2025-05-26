@@ -1,0 +1,75 @@
+﻿@model ControleDeMedicamentos.ConsoleApp.ModuloMedicamento.CadastrarMedicamentoViewModel
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Cadastrar Medicamento";
+}
+
+<div class="dashboard">
+    <link rel="stylesheet" href="~/css/cadastrar.css" />
+
+    <div class="card pequeno cabecalho-form">
+        <div class="titulo-cadastrar">
+            Cadastrar Medicamento
+        </div>
+        <a href="/" class="btn-voltar" title="Voltar">
+            <span class="material-icons">keyboard_arrow_left</span> Voltar
+        </a>
+    </div>
+
+
+    <div class="card grande1 dados-cadastrais-container">
+        <div class="dados-cadastrais-titulo">
+            Dados Cadastrais
+        </div>
+
+        <form action="/medicamentos/cadastrar" method="post" class="form-dados-cadastrais">
+
+            <div class="grid-dados">
+                <div class="campo">
+                    <label>Nome:</label>
+                    <input name="Nome" type="text" value="@Model?.Nome" />
+                </div>
+
+                <div class="campo">
+                    <label>Descrição:</label>
+                    <input name="Descricao" type="text" value="@Model?.Descricao" />
+                </div>
+
+                <div class="campo">
+                    <label>Quantidade:</label>
+                    <input name="Quantidade" type="number" min="0" value="@Model?.Quantidade" />
+                </div>
+
+                <div class="campo">
+                    <label>Valor (R$):</label>
+                    <input name="Valor" type="number" step="0.01" min="0" value="@Model?.Valor" />
+                </div>
+
+                <div class="campo">
+                    <label>Fornecedor:</label>
+                    <select name="FornecedorId">
+                        @foreach (var fornecedor in Model.FornecedoresDisponiveis)
+                        {
+                            <option value="@fornecedor.Id" @(fornecedor.Id == Model.FornecedorId ? "selected" : "")>
+                                @fornecedor.Nome
+                            </option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="campo sintomas-tratados">
+                <label>Sintomas Tratados (separados por vírgula):</label>
+                <input name="SintomasTratados" type="text" value="@string.Join(", ", Model?.SintomasTratados ?? new List<string>())" />
+            </div>
+
+            <hr />
+
+        </form>
+            <div class="botoes-form">
+                <button type="submit" class="btn-azul">Salvar</button>
+                <a href="/" class="btn-branco">Cancelar</a>
+            </div>
+    </div>
+</div>
