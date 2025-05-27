@@ -1,22 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using ControleDeMedicamentos.ConsoleApp.Model;
+using ControleDeMedicamentos.ConsoleApp.ModuloFornecedor;
 
-namespace ControleDeMedicamentos.ConsoleApp.ModuloFornecedor
+namespace ControleDeMedicamentos.ConsoleApp.Extensions;
+
+public static class FornecedorExtensions
 {
-    public static class FornecedorExtensions
+    public static Fornecedor ParaEntidade(this FormularioFornecedorViewModel formularioVM)
     {
-        public static Fornecedor ParaEntidade(this CadastrarFornecedorViewModel viewModel)
-        {
-            return new Fornecedor(viewModel.Nome, viewModel.Telefone, viewModel.CNPJ);
-        }
+        return new Fornecedor(formularioVM.Nome, formularioVM.Telefone, formularioVM.CNPJ);
+    }
 
-        public static Fornecedor ParaEntidade(this EditarFornecedorViewModel viewModel)
-        {
-            return new Fornecedor(viewModel.Nome, viewModel.Telefone, viewModel.CNPJ);
-        }
-
-        public static DetalhesFornecedorViewModel ParaDetalhesVM(this Fornecedor fornecedor)
-        {
-            return new DetalhesFornecedorViewModel(fornecedor);
-        }
+    public static DetalhesFornecedorViewModel ParaDetalhesVM(this Fornecedor fornecedor)
+    {
+        return new DetalhesFornecedorViewModel(
+                fornecedor.Id,
+                fornecedor.Nome,
+                fornecedor.Telefone,
+                fornecedor.CNPJ
+        );
     }
 }

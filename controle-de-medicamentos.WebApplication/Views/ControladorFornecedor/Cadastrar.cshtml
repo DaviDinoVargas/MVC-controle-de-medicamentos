@@ -1,0 +1,52 @@
+﻿@using ControleDeMedicamentos.ConsoleApp.Model
+@model CadastrarFornecedorViewModel
+
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Cadastro de Fornecedor";
+}
+
+<div class="dashboard">
+    <link rel="stylesheet" href="~/css/cadastrar.css" />
+
+    <div class="card pequeno cabecalho-form">
+        <div class="titulo-cadastrar">
+            Cadastrar Fornecedor
+        </div>
+        <a href="/fornecedores/visualizar" class="btn-voltar" title="Voltar">
+            <span class="material-icons">keyboard_arrow_left</span> Voltar
+        </a>
+    </div>
+
+    <div class="card grande1 dados-cadastrais-container">
+        <div class="dados-cadastrais-titulo">
+            Dados Cadastrais
+        </div>
+
+        <form action="/fornecedores/cadastrar" method="post" class="form-dados-cadastrais">
+            <div class="grid-dados">
+                <div class="campo">
+                    <label>Nome:</label>
+                    <input name="Nome" type="text" value="@Model?.Nome" required />
+                </div>
+
+                <div class="campo">
+                    <label>Telefone:</label>
+                    <input name="Telefone" type="tel" value="@Model?.Telefone" required />
+                </div>
+
+                <div class="campo">
+                    <label>CNPJ:</label>
+                    <input name="CNPJ" type="text" value="@Model?.CNPJ" required />
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="botoes-form">
+                <button type="submit" class="btn-azul">Salvar</button>
+                <a href="/fornecedores/visualizar" class="btn-branco">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>

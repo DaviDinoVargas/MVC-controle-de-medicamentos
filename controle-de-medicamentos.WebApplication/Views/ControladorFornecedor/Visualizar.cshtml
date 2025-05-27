@@ -1,0 +1,99 @@
+﻿@using System.Text.Json
+@using ControleDeMedicamentos.ConsoleApp.Model
+@using ControleDeMedicamentos.ConsoleApp.ModuloMedicamento
+
+@model VisualizarMedicamentosViewModel
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Visualizar Medicamentos";
+}
+<link rel="stylesheet" href="~/css/tabela-medicamentos.css" />
+
+<main class="dashboard">
+    <div class="container">
+        <header>
+            <input type="text" id="searchInput" placeholder="Pesquisar por nome...">
+            <div class="filters">
+                <select id="sortFilter">
+                    <option value="recent">Mais Recentes</option>
+                    <option value="oldest">Mais Antigos</option>
+                    <option value="valorMaior">Maior Valor</option>
+                    <option value="valorMenor">Menor Valor</option>
+                </select>
+                <div class="action-buttons">
+                    <a class="btn-delete" href="/medicamentos/excluirMultiplos">
+                        <span class="material-icons">delete</span>
+                    </a>
+                    <a class="btn-add" href="/medicamentos/cadastrar">
+                        <span class="material-icons">add</span>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <div class="table-container">
+            <table class="tabela-medicamentos">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" disabled /></th>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Fornecedor</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var medicamento in Model.Registros)
+                    {
+                        var classeStatus = medicamento.StatusEstoque.ToLower().Contains("disponível") ? "disponivel" : "em-falta";
+
+                        <tr class="linha @classeStatus" onclick="window.location='@Url.Action("Detalhes", "Medicamentos", new { id = medicamento.Id })'">
+                            <td><input type="checkbox" /></td>
+                            <td>@medicamento.Id</td>
+                            <td>@medicamento.Nome</td>
+                            <td>@medicamento.NomeFornecedor</td>
+                            <td>
+                                <span class="badge @(classeStatus == "disponivel" ? "badge-disponivel" : "badge-falta")">
+                                    @medicamento.StatusEstoque
+                                </span>
+                            </td>
+                            <td>
+                                <div class="acoes">
+                                    <span class="icone-mais" onclick="event.stopPropagation(); this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block';">⋮</span>
+                                    <div class="dropdown" style="display:none;">
+                                        <a href="@Url.Action("Editar", "Medicamentos", new { id = medicamento.Id })">Editar</a>
+                                        <a href="@Url.Action("Excluir", "Medicamentos", new { id = medicamento.Id })">Excluir</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('click', function (event) {
+            const dropdowns = document.querySelectorAll('.dropdown');
+            dropdowns.forEach(d => {
+                if (!d.contains(event.target) && !d.previousElementSibling.contains(event.target)) {
+                    d.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
+    @{
+        var jsonOptions = new JsonSerializerOptions { PropertyNamingPolicy = null };
+        var dadosJson = JsonSerializer.Serialize(Model.Registros, jsonOptions);
+    }
+
+    <script>
+        const medicamentos = @Html.Raw(dadosJson);
+    </script>
+
+    <script src="~/js/filtrarMedicamentos.js"></script>
+</main>

@@ -1,4 +1,5 @@
 ﻿@using ControleDeMedicamentos.ConsoleApp.Model
+@using ControleDeMedicamentos.ConsoleApp.ModuloMedicamento
 
 @model CadastrarMedicamentoViewModel
 
@@ -37,7 +38,6 @@
                     <label>Descrição:</label>
                     <input name="Descricao" type="text" value="@Model?.Descricao" />
                 </div>
-                @* /*
                 <div class="campo">
                     <label>Quantidade:</label>
                     <input name="Quantidade" type="number" min="0" value="@Model?.Quantidade" />
@@ -47,7 +47,6 @@
                     <label>Valor (R$):</label>
                     <input name="Valor" type="number" step="0.01" min="0" value="@Model?.Valor" />
                 </div>
-                */ *@
                 <div class="campo">
                     <label>Fornecedor:</label>
                     <select name="FornecedorId">
@@ -61,17 +60,17 @@
                 </div>
             </div>
 
-            @* <div class="campo sintomas-tratados">
+            <div class="campo sintomas-tratados">
                 <label>Sintomas Tratados (separados por vírgula):</label>
                 <input name="SintomasTratados" type="text" value="@string.Join(", ", Model?.SintomasTratados ?? new List<string>())" />
-            </div> *@
+            </div>
 
             <hr />
 
-        </form>
             <div class="botoes-form">
                 <button type="submit" class="btn-azul">Salvar</button>
                 <a href="/" class="btn-branco">Cancelar</a>
             </div>
+        </form>
     </div>
 </div>

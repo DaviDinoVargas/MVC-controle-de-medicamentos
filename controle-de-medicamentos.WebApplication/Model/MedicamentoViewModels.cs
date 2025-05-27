@@ -1,124 +1,141 @@
-﻿using ControleDeMedicamentos.ConsoleApp.Extensions;
-using ControleDeMedicamentos.ConsoleApp.ModuloFornecedor;
-using ControleDeMedicamentos.ConsoleApp.ModuloMedicamento;
+﻿using ControleDeMedicamentos.ConsoleApp.ModuloFornecedor;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace ControleDeMedicamentos.ConsoleApp.Model;
-
-public abstract class FormularioMedicamentoViewModel
+namespace ControleDeMedicamentos.ConsoleApp.ModuloMedicamento
 {
-    public string Nome { get; set; }
-    public string Descricao { get; set; }
-    public Guid FornecedorId { get; set; }
-    public List<SelecionarFornecedorViewModel> FornecedoresDisponiveis { get; set; }
 
-    protected FormularioMedicamentoViewModel()
+    public abstract class FormularioMedicamentoViewModel
     {
-        FornecedoresDisponiveis = new List<SelecionarFornecedorViewModel>();
-    }
-}
+        public string Nome { get; set; }
+        public string Descricao { get; set; }
+        public int Quantidade { get; set; }
+        public decimal Valor { get; set; }
+        public int FornecedorId { get; set; }
+        public List<string> SintomasTratados { get; set; }
 
-public class SelecionarFornecedorViewModel
-{
-    public Guid Id { get; set; }
-    public string Nome { get; set; }
+        public List<SelecionarFornecedorViewModel> FornecedoresDisponiveis { get; set; }
 
-    public SelecionarFornecedorViewModel(Guid id, string nome)
-    {
-        Id = id;
-        Nome = nome;
-    }
-}
-
-public class CadastrarMedicamentoViewModel : FormularioMedicamentoViewModel
-{
-    public CadastrarMedicamentoViewModel() { }
-
-    public CadastrarMedicamentoViewModel(List<Fornecedor> fornecedores)
-    {
-        foreach (var f in fornecedores)
+        protected FormularioMedicamentoViewModel()
         {
-            var selecionarVM = new SelecionarFornecedorViewModel(f.Id, f.Nome);
+            SintomasTratados = new List<string>();
+            FornecedoresDisponiveis = new List<SelecionarFornecedorViewModel>();
+        }
 
-            FornecedoresDisponiveis.Add(selecionarVM);
+        protected FormularioMedicamentoViewModel(List<Fornecedor> fornecedores) : this()
+        {
+            FornecedoresDisponiveis = fornecedores
+                .Select(f => new SelecionarFornecedorViewModel(f.Id, f.Nome))
+                .ToList();
         }
     }
-}
 
-public class EditarMedicamentoViewModel : FormularioMedicamentoViewModel
-{
-    public Guid Id { get; set; }
-
-    public EditarMedicamentoViewModel() { }
-
-    public EditarMedicamentoViewModel(
-        Guid id,
-        string nome,
-        string descricao,
-        Guid fornecedorId,
-        List<Fornecedor> fornecedores
-    )
+    public class CadastrarMedicamentoViewModel : FormularioMedicamentoViewModel
     {
-        Id = id;
-        Nome = nome;
-        Descricao = descricao;
-        FornecedorId = fornecedorId;
+        public CadastrarMedicamentoViewModel() { }
 
-        foreach (var f in fornecedores)
+        public CadastrarMedicamentoViewModel(List<Fornecedor> fornecedores)
+            : base(fornecedores)
         {
-            var selecionarVM = new SelecionarFornecedorViewModel(f.Id, f.Nome);
-
-            FornecedoresDisponiveis.Add(selecionarVM);
         }
     }
-}
 
-public class ExcluirMedicamentoViewModel
-{
-    public Guid Id { get; set; }
-    public string Nome { get; set; }
-
-    public ExcluirMedicamentoViewModel() { }
-
-    public ExcluirMedicamentoViewModel(Guid id, string nome)
+    public class EditarMedicamentoViewModel : FormularioMedicamentoViewModel
     {
-        Id = id;
-        Nome = nome;
-    }
-}
+        public int Id { get; set; }
 
-public class VisualizarMedicamentosViewModel
-{
-    public List<DetalhesMedicamentoViewModel> Registros { get; }
+        public EditarMedicamentoViewModel() { }
 
-    public VisualizarMedicamentosViewModel(List<Medicamento> medicamentos)
-    {
-        Registros = new List<DetalhesMedicamentoViewModel>();
-
-        foreach (var m in medicamentos)
+        public EditarMedicamentoViewModel(Medicamento medicamento, List<Fornecedor> fornecedores)
+            : base(fornecedores)
         {
-            var detalhesVM = m.ParaDetalhesVM();
-
-            Registros.Add(detalhesVM);
+            Id = medicamento.Id;
+            Nome = medicamento.Nome;
+            Descricao = medicamento.Descricao;
+            Quantidade = medicamento.Quantidade;
+            Valor = medicamento.Valor;
+            FornecedorId = medicamento.Fornecedor?.Id ?? 0;
+            SintomasTratados = medicamento.SintomasTratados ?? new List<string>();
         }
     }
-}
 
-public class DetalhesMedicamentoViewModel
-{
-    public Guid Id { get; set; }
-    public string Nome { get; set; }
-    public string Descricao { get; set; }
-    public string NomeFornecedor { get; set; }
-    public int QuantidadeEmEstoque { get; set; }
-    public bool EmFalta { get; set; }
-
-    public DetalhesMedicamentoViewModel(Guid id, string nome, string descricao, string nomeFornecedor, int quantidade, bool emFalta)
+    public class ExcluirMedicamentoViewModel
     {
-        Id = id;
-        Nome = nome;
-        Descricao = descricao;
-        NomeFornecedor = nomeFornecedor;
-        QuantidadeEmEstoque = quantidade;
-        EmFalta = emFalta;
+        public int Id { get; set; }
+        public string Nome { get; set; }
+
+        public ExcluirMedicamentoViewModel(int id, string nome)
+        {
+            Id = id;
+            Nome = nome;
+        }
+    }
+
+    public class VisualizarMedicamentosViewModel
+    {
+        public List<DetalhesMedicamentoViewModel> Registros { get; set; }
+
+        public VisualizarMedicamentosViewModel(List<Medicamento> medicamentos)
+        {
+            Registros = medicamentos.Select(m => new DetalhesMedicamentoViewModel(m)).ToList();
+        }
+    }
+
+    public class DetalhesMedicamentoViewModel
+    {
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public string Descricao { get; set; }
+        public int Quantidade { get; set; }
+        public decimal Valor { get; set; }
+        public string StatusEstoque { get; set; }
+        public string NomeFornecedor { get; set; }
+        public List<string> SintomasTratados { get; set; }
+
+        public DetalhesMedicamentoViewModel(Medicamento medicamento)
+        {
+            Id = medicamento.Id;
+            Nome = medicamento.Nome;
+            Descricao = medicamento.Descricao;
+            Quantidade = medicamento.Quantidade;
+            Valor = medicamento.Valor;
+            StatusEstoque = medicamento.ObterStatusEstoque();
+            NomeFornecedor = medicamento.Fornecedor?.Nome ?? "N/A";
+            SintomasTratados = medicamento.SintomasTratados ?? new List<string>();
+        }
+
+        public override string ToString()
+        {
+            return $"Id: {Id} - Nome: {Nome} - Quantidade: {Quantidade} - Valor: {Valor:C} - Fornecedor: {NomeFornecedor} - Status: {StatusEstoque}";
+        }
+    }
+
+    public class AdicionarEstoqueViewModel
+    {
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public int QuantidadeAtual { get; set; }
+        public int QuantidadeAdicionar { get; set; }
+
+        public AdicionarEstoqueViewModel() { }
+
+        public AdicionarEstoqueViewModel(Medicamento medicamento)
+        {
+            Id = medicamento.Id;
+            Nome = medicamento.Nome;
+            QuantidadeAtual = medicamento.Quantidade;
+        }
+    }
+
+    public class SelecionarFornecedorViewModel
+    {
+        public int Id { get; set; }
+        public string Nome { get; set; }
+
+        public SelecionarFornecedorViewModel(int id, string nome)
+        {
+            Id = id;
+            Nome = nome;
+        }
     }
 }

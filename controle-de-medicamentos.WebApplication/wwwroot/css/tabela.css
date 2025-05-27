@@ -1,200 +1,195 @@
-﻿.dashboard {
-    height: 100%;
-    padding: 15px;
-    font-family: Arial, sans-serif;
+﻿body, html {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden; 
     display: flex;
     flex-direction: column;
-    gap: 15px;
+}
+main.dashboard {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 70px;
 }
 
-.filters-container {
+.medicamentos-container {
+    height: 55rem;
+    margin: 10px;
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    flex: 1;
     display: flex;
-    gap: 15px;
-    padding: 0 20px;
-    align-items: center;
-    margin-bottom: 10px;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
 }
 
-    .filters-container input[type="text"],
-    .filters-container select {
-        height: 32px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        padding: 6px 10px;
-        font-size: 14px;
-        font-family: Arial, sans-serif;
-        transition: border-color 0.2s;
-        box-sizing: border-box;
-    }
+.medicamentos-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #003366;
+    background-color: white;
 
-    .filters-container input[type="text"] {
-        width: 300px;
-    }
 
-    .filters-container select {
-        width: 200px;
-    }
+}
 
-        .filters-container input:focus,
-        .filters-container select:focus {
-            border-color: #1e3a5f;
-            outline: none;
+    .medicamentos-table thead {
+        background-color: #cce6ff;
+    }
+        .medicamentos-table thead tr th {
+            width: auto;
+            padding: 10px 12px;
+            background-color: #cce6ff;
+            color: #003366;
+            font-weight: bold;
+            text-align: left;
+            border-right: 1px solid white;
         }
 
-.action-buttons {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
+            .medicamentos-table thead tr th:first-child {
+                border-top-left-radius: 12px;
+            }
 
-.btn-delete,
-.btn-add {
-    border: none;
-    border-radius: 6px;
-    padding: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s;
-    font-size: 14px;
+            .medicamentos-table thead tr th:last-child {
+                border-top-right-radius: 12px;
+                border-right: none;
+            }
+
+
+    .medicamentos-table tbody tr td {
+        padding: 10px 12px;
+        background-color: white;
+        border-bottom: 1px solid #f2f2f2; /* linha bem clara para separar */
+        border-right: 1px solid white; /* separação entre colunas */
+    }
+
+        /* Remove borda da última coluna */
+        .medicamentos-table tbody tr td:last-child {
+            border-right: none;
+        }
+
+/* Badge do status */
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
     font-weight: 600;
-}
-
-.btn-delete {
-    background-color: #ff4444;
-    color: white;
-}
-
-    .btn-delete:hover {
-        background-color: #cc0000;
-    }
-
-.btn-add {
-    background-color: #1e3a5f;
-    color: white;
-}
-
-    .btn-add:hover {
-        background-color: #14304a;
-    }
-
-.material-icons {
-    font-size: 24px;
-    vertical-align: middle;
-}
-
-/* Cartão principal */
-.card.grande1.medicamentos-container {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    padding: 20px;
-    flex: 1;
-}
-
-.medicamentos-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-/* Itens individuais */
-.medicamento-item {
-    background-color: #eaf2fb;
-    border-radius: 8px;
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: box-shadow 0.2s;
-}
-
-    .medicamento-item:hover {
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-.medicamento-content {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    flex: 1;
-}
-
-.checkbox {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-}
-
-.medicamento-info {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 25px;
-    align-items: center;
-}
-
-    .medicamento-info span {
-        font-size: 14px;
-        color: #1e3a5f;
-    }
-
-/* Status */
-.status-alerta {
-    color: #ff4444;
-    font-weight: bold;
+    font-size: 0.85em;
+    text-align: center;
 }
 
 .status-ok {
-    color: #00aa00;
-    font-weight: bold;
+    background-color: #d4edda;
+    color: #155724;
 }
 
-/* Menu de ações */
-.medicamento-actions {
+.status-alerta {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+/* Ações da tabela */
+.acoes-coluna {
     position: relative;
+    white-space: nowrap;
 }
 
 .menu-btn {
     background: none;
     border: none;
     cursor: pointer;
-    color: #1e3a5f;
-    padding: 5px;
-    border-radius: 4px;
-    transition: background-color 0.2s;
+    font-size: 20px;
+    color: #003366;
 }
 
-    .menu-btn:hover {
-        background-color: #e0e0e0;
-    }
-
 .menu-dropdown {
+    display: none;
     position: absolute;
     right: 0;
     top: 100%;
-    background-color: white;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    padding: 5px 0;
-    min-width: 120px;
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     z-index: 10;
-    display: none;
+    min-width: 100px;
 }
 
     .menu-dropdown a {
         display: block;
-        padding: 8px 15px;
-        color: #333;
+        padding: 8px 12px;
+        color: #003366;
         text-decoration: none;
-        font-size: 14px;
-        transition: background-color 0.2s;
     }
 
         .menu-dropdown a:hover {
-            background-color: #f0f0f0;
+            background-color: #cce6ff;
         }
 
-.medicamento-actions:hover .menu-dropdown {
-    display: block;
+/* Hover leve na linha */
+.medicamentos-table tbody tr:hover {
+    background-color: #f9f9f9;
+    cursor: pointer;
 }
+
+/* Checkbox do cabeçalho */
+#selectAll {
+    cursor: not-allowed;
+}
+.medicamentos-table tfoot td {
+    border-top: 3px solid #66b3ff; /* Linha azul separando tabela da paginação */
+    background-color: #f9f9f9;
+    padding: 16px;
+}
+
+.paginacao-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* 👈 Garante que a div use toda a largura da <td> */
+    box-sizing: border-box;
+}
+
+.paginacao-start label {
+    margin-right: 8px;
+    color: #333;
+}
+
+.paginacao-start select {
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.paginacao-end {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: #333;
+}
+
+.paginacao-paginas {
+    display: flex;
+    gap: 8px;
+}
+
+.pagina {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: white;
+    color: #333;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+    .pagina.ativa {
+        background-color: #cce6ff;
+        border-color: #66b3ff;
+        color: #003366;
+    }

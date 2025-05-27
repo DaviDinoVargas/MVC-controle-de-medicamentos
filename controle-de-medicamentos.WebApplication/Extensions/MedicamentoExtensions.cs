@@ -1,40 +1,44 @@
 ﻿using ControleDeMedicamentos.ConsoleApp.Model;
 using ControleDeMedicamentos.ConsoleApp.ModuloFornecedor;
 using ControleDeMedicamentos.ConsoleApp.ModuloMedicamento;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace ControleDeMedicamentos.ConsoleApp.Extensions;
-
-public static class MedicamentoExtensions
+namespace ControleDeMedicamentos.ConsoleApp.Extensoes
 {
-    public static Medicamento ParaEntidade(
-        this FormularioMedicamentoViewModel formularioVM,
-        List<Fornecedor> fornecedores
-    )
+    public static class MedicamentoExtensions
     {
-        Fornecedor fornecedorSelecionado = null;
-
-        foreach (var f in fornecedores)
+        public static Medicamento ParaEntidade(this CadastrarMedicamentoViewModel viewModel, List<Fornecedor> fornecedores)
         {
-            if (f.Id == formularioVM.FornecedorId)
-                fornecedorSelecionado = f;
+            var fornecedor = fornecedores.FirstOrDefault(f => f.Id == viewModel.FornecedorId);
+
+            return new Medicamento(
+                viewModel.Nome,
+                viewModel.Descricao,
+                viewModel.Quantidade,
+                viewModel.Valor,
+                fornecedor,
+                viewModel.SintomasTratados ?? new List<string>()
+            );
         }
 
-        return new Medicamento(
-            formularioVM.Nome,
-            formularioVM.Descricao,
-            fornecedorSelecionado
-        );
-    }
+        public static Medicamento ParaEntidade(this EditarMedicamentoViewModel viewModel, List<Fornecedor> fornecedores)
+        {
+            var fornecedor = fornecedores.FirstOrDefault(f => f.Id == viewModel.FornecedorId);
 
-    public static DetalhesMedicamentoViewModel ParaDetalhesVM(this Medicamento medicamento)
-    {
-        return new DetalhesMedicamentoViewModel(
-            medicamento.Id,
-            medicamento.Nome,
-            medicamento.Descricao,
-            medicamento.Fornecedor.Nome,
-            medicamento.QuantidadeEmEstoque,
-            medicamento.EmFalta
-        );
+            return new Medicamento(
+                viewModel.Nome,
+                viewModel.Descricao,
+                viewModel.Quantidade,
+                viewModel.Valor,
+                fornecedor,
+                viewModel.SintomasTratados ?? new List<string>()
+            );
+        }
+
+        public static DetalhesMedicamentoViewModel ParaDetalhesVM(this Medicamento medicamento)
+        {
+            return new DetalhesMedicamentoViewModel(medicamento);
+        }
     }
 }

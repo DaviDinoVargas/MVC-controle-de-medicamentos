@@ -1,62 +1,85 @@
-﻿namespace ControleDeMedicamentos.ConsoleApp.ModuloFornecedor
+using ControleDeMedicamentos.ConsoleApp.Extensions;
+using ControleDeMedicamentos.ConsoleApp.ModuloFornecedor;
+
+namespace ControleDeMedicamentos.ConsoleApp.Model;
+
+public abstract class FormularioFornecedorViewModel
 {
-    public class CadastrarFornecedorViewModel
+    public string Nome { get; set; }
+    public string Telefone { get; set; }
+    public string CNPJ { get; set; }
+}
+
+public class CadastrarFornecedorViewModel : FormularioFornecedorViewModel
+{
+    public CadastrarFornecedorViewModel() { }
+
+    public CadastrarFornecedorViewModel(string nome, string telefone, string cnpj) : this()
     {
-        public string Nome { get; set; }
-        public string Telefone { get; set; }
-        public string CNPJ { get; set; }
+        Nome = nome;
+        Telefone = telefone;
+        CNPJ = cnpj;
     }
+}
 
-    public class EditarFornecedorViewModel : CadastrarFornecedorViewModel
+public class EditarFornecedorViewModel : FormularioFornecedorViewModel
+{
+    public int Id { get; set; }
+
+    public EditarFornecedorViewModel() { }
+
+    public EditarFornecedorViewModel(int id, string nome, string telefone, string cnpj) : this()
     {
-        public int Id { get; set; }
+        Id = id;
+        Nome = nome;
+        Telefone = telefone;
+        CNPJ = cnpj;
+    }
+}
 
-        public EditarFornecedorViewModel() { }
+public class ExcluirFornecedorViewModel
+{
+    public int Id { get; set; }
+    public string Nome { get; set; }
 
-        public EditarFornecedorViewModel(Fornecedor fornecedor)
+    public ExcluirFornecedorViewModel() { }
+
+    public ExcluirFornecedorViewModel(int id, string nome) : this()
+    {
+        Id = id;
+        Nome = nome;
+    }
+}
+
+public class VisualizarFornecedoresViewModel
+{
+    public List<DetalhesFornecedorViewModel> Registros { get; }
+
+    public VisualizarFornecedoresViewModel(List<Fornecedor> fornecedores)
+    {
+        Registros = [];
+
+        foreach (var f in fornecedores)
         {
-            Id = fornecedor.Id;
-            Nome = fornecedor.Nome;
-            Telefone = fornecedor.Telefone;
-            CNPJ = fornecedor.CNPJ;
+            var detalhesVM = f.ParaDetalhesVM();
+
+            Registros.Add(detalhesVM);
         }
     }
+}
 
-    public class ExcluirFornecedorViewModel
+public class DetalhesFornecedorViewModel
+{
+    public int Id { get; set; }
+    public string Nome { get; set; }
+    public string Telefone { get; set; }
+    public string CNPJ { get; set; }
+
+    public DetalhesFornecedorViewModel(int id, string nome, string telefone, string cnpj)
     {
-        public int Id { get; set; }
-        public string Nome { get; set; }
-
-        public ExcluirFornecedorViewModel(int id, string nome)
-        {
-            Id = id;
-            Nome = nome;
-        }
-    }
-
-    public class DetalhesFornecedorViewModel
-    {
-        public int Id { get; set; }
-        public string Nome { get; set; }
-        public string Telefone { get; set; }
-        public string CNPJ { get; set; }
-
-        public DetalhesFornecedorViewModel(Fornecedor fornecedor)
-        {
-            Id = fornecedor.Id;
-            Nome = fornecedor.Nome;
-            Telefone = fornecedor.Telefone;
-            CNPJ = fornecedor.CNPJ;
-        }
-    }
-
-    public class VisualizarFornecedoresViewModel
-    {
-        public List<DetalhesFornecedorViewModel> Registros { get; set; }
-
-        public VisualizarFornecedoresViewModel(List<Fornecedor> fornecedores)
-        {
-            Registros = fornecedores.Select(f => new DetalhesFornecedorViewModel(f)).ToList();
-        }
+        Id = id;
+        Nome = nome;
+        Telefone = telefone;
+        CNPJ = cnpj;
     }
 }

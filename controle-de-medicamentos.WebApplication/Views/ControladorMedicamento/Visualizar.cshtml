@@ -6,11 +6,11 @@
 
 @{
     Layout = "_Layout";
-    ViewData["Title"] = "Medicamentos";
+    ViewData["Title"] = "Visualizar Medicamentos";
 }
 <link rel="stylesheet" href="~/css/tabela.css" />
 
-<main class="dashboard">  
+<main class="dashboard">
 
     <div class="filters-container">
         <input type="text" id="searchInput" placeholder="Pesquisar por nome..." />
@@ -31,47 +31,77 @@
     </div>
 
     <div class="card grande1 medicamentos-container">
-        <div class="medicamentos-list">
-            @foreach (var m in Model.Registros)
-            {
-                <div class="medicamento-item">
-                    <div class="medicamento-content">
-                        <input type="checkbox" class="checkbox" name="selecionados" value="@m.Id" />
-                        <div class="medicamento-info">
-                            <span class="info-id"><strong>ID:</strong> @m.Id</span>
-                            <span class="info-nome"><strong>Nome:</strong> @m.Nome</span>
-                            <span class="info-fornecedor"><strong>Fornecedor:</strong> @(m.NomeFornecedor ?? "Sem fornecedor")</span>
-                            <span class="info-status">
-                                <strong>Status:</strong>
-                                @* <span class="@(m.Quantidade < 20 ? "status-alerta" : "status-ok")">
-                                    @(m.Quantidade < 20 ? "EM FALTA" : "Disponível")
-                                </span> *@
+        <table class="medicamentos-table">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="selectAll" disabled /></th>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Fornecedor</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var m in Model.Registros)
+                {
+                    <tr class="@(m.Quantidade < 20 ? "status-falta" : "status-disponivel")" tabindex="0">
+                        <td>
+                            <input type="checkbox" class="checkbox" name="selecionados" value="@m.Id" />
+                        </td>
+                        <td>@m.Id</td>
+                        <td>@m.Nome</td>
+                        <td>@(m.NomeFornecedor ?? "Sem fornecedor")</td>
+                        <td>
+                            <span class="@(m.Quantidade < 20 ? "status-alerta" : "status-ok")">
+                                @(m.Quantidade < 20 ? "EM FALTA" : "Disponível")
                             </span>
+                        </td>
+                        <td class="acoes-coluna">
+                            <button class="menu-btn" aria-haspopup="true" aria-expanded="false" aria-label="Menu de ações">
+                                <span class="material-icons">more_vert</span>
+                            </button>
+                            <div class="menu-dropdown" role="menu">
+                                <a href="/medicamentos/editar/@m.Id" role="menuitem">Editar</a>
+                                <a href="/medicamentos/excluir/@m.Id" role="menuitem">Excluir</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="6">
+                        <div class="paginacao-footer">
+                            <div class="paginacao-start">
+                                <label for="itensPorPagina">Itens por página:</label>
+                                <select id="itensPorPagina">
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
+
+                            <div class="paginacao-end">
+                                <span>Exibindo 1–25 de 89</span>
+                                <div class="paginacao-paginas">
+                                    <button class="pagina ativa">1</button>
+                                    <button class="pagina">2</button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
 
-                    <div class="medicamento-actions">
-                        <button class="menu-btn">
-                            <span class="material-icons">more_vert</span>
-                        </button>
-                        <div class="menu-dropdown">
-                            <a href="/medicamentos/editar/@m.Id">Editar</a>
-                            <a href="/medicamentos/excluir/@m.Id">Excluir</a>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
-    </div>
-</main>
+    @{
+        var jsonOptions = new JsonSerializerOptions { PropertyNamingPolicy = null };
+        var dadosJson = JsonSerializer.Serialize(Model.Registros, jsonOptions);
+    }
 
-@{
-    var jsonOptions = new JsonSerializerOptions { PropertyNamingPolicy = null };
-    var dadosJson = JsonSerializer.Serialize(Model.Registros, jsonOptions);
-}
+    <script>
+        const medicamentos = @Html.Raw(dadosJson);
+    </script>
 
-<script>
-    const medicamentos = @Html.Raw(dadosJson);
-</script>
-
-<script src="~/js/filtrarMedicamentos.js"></script>
+    <script src="~/js/filtrarMedicamentos.js"></script>
