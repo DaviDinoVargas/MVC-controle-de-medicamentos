@@ -154,17 +154,6 @@ main.dashboard {
     box-sizing: border-box;
 }
 
-.paginacao-start label {
-    margin-right: 8px;
-    color: #333;
-}
-
-.paginacao-start select {
-    padding: 4px 8px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-}
-
 .paginacao-end {
     display: flex;
     align-items: center;
@@ -193,3 +182,32 @@ main.dashboard {
         border-color: #66b3ff;
         color: #003366;
     }
+.itens-por-pagina-retangulo {
+    display: inline-flex;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #e0f0ff;
+    margin-left: 0.5rem;
+    width: 80px; 
+}
+
+    .itens-por-pagina-retangulo button {
+        all: unset; 
+        flex: 1; 
+        height: 30px;
+        background-color: transparent;
+        color: #003366; 
+        font-weight: 100;
+        font-family: sans-serif;
+        font-size: 14px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+        .itens-por-pagina-retangulo button.ativo {
+            background-color: #003366;
+            color: #e0f0ff;
+        }

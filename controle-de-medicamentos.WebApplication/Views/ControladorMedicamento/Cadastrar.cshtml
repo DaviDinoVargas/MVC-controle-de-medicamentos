@@ -28,6 +28,7 @@
 
         <form action="/medicamentos/cadastrar" method="post" class="form-dados-cadastrais">
 
+            <div class="margin-especial">
             <div class="grid-dados">
                 <div class="campo">
                     <label>Nome:</label>
@@ -65,7 +66,7 @@
                 <input name="SintomasTratados" type="text" value="@string.Join(", ", Model?.SintomasTratados ?? new List<string>())" />
             </div>
 
-            <hr />
+            </div>
 
             <div class="botoes-form">
                 <button type="submit" class="btn-azul">Salvar</button>

@@ -44,7 +44,6 @@
 }
 
 .card.grande1.dados-cadastrais-container {
-
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -60,11 +59,14 @@
 
 
 .form-dados-cadastrais {
-    margin-left: 250px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 0 20px 20px 20px;
+}
+
+.margin-especial {
+    margin-left: 15rem;
 }
 
 .grid-dados {
@@ -93,6 +95,7 @@
 
     .campo input[type="text"],
     .campo input[type="number"],
+    .campo input[type="tel"],
     .campo select {
         height: 32px;
         border: 1px solid #ccc;
@@ -107,6 +110,7 @@
 
         .campo input[type="text"]:focus,
         .campo input[type="number"]:focus,
+        .campo input[type="tel"]:focus,
         .campo select:focus {
             border-color: #1e3a5f;
             outline: none;
@@ -129,8 +133,8 @@ form hr {
     margin-bottom: 15px;
 }
 .botoes-form {
+    width: 100%;
     border-top: 1px solid #ddd;
-    padding: 20px;
     justify-content: flex-start;
     padding-top: 15px;
 }

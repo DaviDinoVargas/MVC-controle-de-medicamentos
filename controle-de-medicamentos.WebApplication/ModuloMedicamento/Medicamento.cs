@@ -59,7 +59,7 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloMedicamento
 
         public string ObterStatusEstoque()
         {
-            return Quantidade < 20 ? "EM FALTA" : "Disponível";
+            return Quantidade < 20 ? "Em falta" : "Disponível";
         }
     }
 }

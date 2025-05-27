@@ -54,7 +54,7 @@
                         <td>@(m.NomeFornecedor ?? "Sem fornecedor")</td>
                         <td>
                             <span class="@(m.Quantidade < 20 ? "status-alerta" : "status-ok")">
-                                @(m.Quantidade < 20 ? "EM FALTA" : "Disponível")
+                                @(m.Quantidade < 20 ? "Em falta" : "Disponível")
                             </span>
                         </td>
                         <td class="acoes-coluna">
@@ -74,16 +74,16 @@
                     <td colspan="6">
                         <div class="paginacao-footer">
                             <div class="paginacao-start">
-                                <label for="itensPorPagina">Itens por página:</label>
-                                <select id="itensPorPagina">
-                                    <option value="25">25</option>
-                                    <option value="50">50</option>
-                                    <option value="100">100</option>
-                                </select>
+                                <span>Itens por página:</span>
+                                <div class="itens-por-pagina-retangulo">
+                                    <button data-valor="25" class="ativo">25</button>
+                                    <button data-valor="50">50</button>
+                                    <button data-valor="100">100</button>
+                                </div>
                             </div>
 
                             <div class="paginacao-end">
-                                <span>Exibindo 1–25 de 89</span>
+                                <span>Exibindo 1–25 de @Model.Registros.Count</span>
                                 <div class="paginacao-paginas">
                                     <button class="pagina ativa">1</button>
                                     <button class="pagina">2</button>
@@ -103,5 +103,6 @@
     <script>
         const medicamentos = @Html.Raw(dadosJson);
     </script>
-
+    <script src="~/js/paginacaoMedicamentos.js"></script>
     <script src="~/js/filtrarMedicamentos.js"></script>
+    <script src="~/js/acaoTabelas.js"></script>
