@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     height: 100vh;
-    overflow: hidden; 
+
     display: flex;
     flex-direction: column;
 }
@@ -13,11 +13,9 @@ main.dashboard {
 }
 
 .medicamentos-container {
-    height: 55rem;
     margin: 10px;
     background-color: white;
     border-radius: 12px;
-    overflow: hidden;
     box-shadow: 0 0 10px rgba(0,0,0,0.05);
     flex: 1;
     display: flex;
@@ -64,16 +62,14 @@ main.dashboard {
     .medicamentos-table tbody tr td {
         padding: 10px 12px;
         background-color: white;
-        border-bottom: 1px solid #f2f2f2; /* linha bem clara para separar */
-        border-right: 1px solid white; /* separação entre colunas */
+        border-bottom: 1px solid #f2f2f2; 
+        border-right: 1px solid white; 
     }
 
-        /* Remove borda da última coluna */
         .medicamentos-table tbody tr td:last-child {
             border-right: none;
         }
 
-/* Badge do status */
 .status-badge {
     display: inline-block;
     padding: 4px 10px;
@@ -93,7 +89,6 @@ main.dashboard {
     color: #856404;
 }
 
-/* Ações da tabela */
 .acoes-coluna {
     position: relative;
     white-space: nowrap;
@@ -130,18 +125,16 @@ main.dashboard {
             background-color: #cce6ff;
         }
 
-/* Hover leve na linha */
 .medicamentos-table tbody tr:hover {
     background-color: #f9f9f9;
     cursor: pointer;
 }
 
-/* Checkbox do cabeçalho */
 #selectAll {
     cursor: not-allowed;
 }
 .medicamentos-table tfoot td {
-    border-top: 3px solid #66b3ff; /* Linha azul separando tabela da paginação */
+    border-top: 3px solid #66b3ff; 
     background-color: #f9f9f9;
     padding: 16px;
 }
@@ -150,7 +143,7 @@ main.dashboard {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%; /* 👈 Garante que a div use toda a largura da <td> */
+    width: 100%;
     box-sizing: border-box;
 }
 
