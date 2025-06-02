@@ -7,7 +7,6 @@
 main.dashboard {
     flex: 1;
     overflow-y: auto;
-    padding-bottom: 70px;
 }
 
 .medicamentos-container {
@@ -15,10 +14,10 @@ main.dashboard {
     background-color: white;
     border-radius: 12px;
     box-shadow: 0 0 10px rgba(0,0,0,0.05);
-    flex: 1;
     display: flex;
     flex-direction: column;
-    min-height: 0;
+    height: calc(100vh - 120px);
+    max-height: calc(100vh - 120px);
     overflow: hidden;
 }
 
@@ -30,12 +29,36 @@ main.dashboard {
     font-size: 14px;
     color: #003366;
     background-color: white;
-
-
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
+    .medicamentos-table tbody {
+        flex: 1;
+        overflow-y: auto;
+        display: block;
+    }
+
+    .medicamentos-table tfoot {
+        flex-shrink: 0;
+    }
+
+        .medicamentos-table thead tr,
+        .medicamentos-table tfoot tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+    .medicamentos-table tbody tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
 
     .medicamentos-table thead {
         background-color: #cce6ff;
+        flex-shrink: 0;
     }
         .medicamentos-table thead tr th {
             width: auto;
@@ -202,3 +225,62 @@ main.dashboard {
             background-color: #003366;
             color: #e0f0ff;
         }
+
+.filters-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+    gap: 10px;
+}
+
+.filters-left {
+    display: flex;
+    gap: 10px;
+}
+
+    .filters-left input[type="text"],
+    .filters-left select {
+        height: 32px;
+        width: 200px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        padding: 6px 10px;
+        font-size: 14px;
+        font-family: Arial, sans-serif;
+        transition: border-color 0.2s;
+        box-sizing: border-box;
+    }
+
+        .filters-left input[type="text"]:focus,
+        .filters-left select:focus {
+            border-color: #1e3a5f;
+            outline: none;
+        }
+
+.action-buttons {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+    .action-buttons a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 32px;
+        width: 32px;
+        border-radius: 6px;
+        background-color: #1e3a5f;
+        color: white;
+        text-decoration: none;
+        transition: background-color 0.2s;
+    }
+
+        .action-buttons a:hover {
+            background-color: #16314a;
+        }
+
+.action-buttons bnt-delete {
+    background-color: red;
+}

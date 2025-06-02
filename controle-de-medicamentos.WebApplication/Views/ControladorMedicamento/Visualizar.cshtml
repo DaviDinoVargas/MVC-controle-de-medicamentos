@@ -13,19 +13,22 @@
 <main class="dashboard">
 
     <div class="filters-container">
-        <input type="text" id="searchInput" placeholder="Pesquisar por nome..." />
-        <select id="sortFilter">
-            <option value="recent">Mais Recentes</option>
-            <option value="oldest">Mais Antigos</option>
-            <option value="valorMaior">Maior Valor</option>
-            <option value="valorMenor">Menor Valor</option>
-        </select>
+        <div class="filters-left">
+            <input type="text" id="searchInput" placeholder="Pesquisar por nome..." />
+            <select id="sortFilter">
+                <option value="recent">Mais Recentes</option>
+                <option value="oldest">Mais Antigos</option>
+                <option value="valorMaior">Maior Valor</option>
+                <option value="valorMenor">Menor Valor</option>
+            </select>
+        </div>
+
         <div class="action-buttons">
-            <a class="btn-delete" href="/medicamentos/excluirMultiplos">
-                <span class="material-icons">delete</span>
-            </a>
             <a class="btn-add" href="/medicamentos/cadastrar">
                 <span class="material-icons">add</span>
+            </a>
+            <a class="btn-delete" href="/medicamentos/excluirMultiplos">
+                <span class="material-icons">delete</span>
             </a>
         </div>
     </div>
