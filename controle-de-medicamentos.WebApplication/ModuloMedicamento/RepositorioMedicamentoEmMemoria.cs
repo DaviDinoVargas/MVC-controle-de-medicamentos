@@ -51,7 +51,14 @@ namespace ControleDeMedicamentos.ConsoleApp.ModuloMedicamento
 
             return true;
         }
+        public bool ExcluirRegistros(List<int> ids)
+        {
+            int quantidadeOriginal = medicamentos.Count;
 
+            medicamentos.RemoveAll(m => ids.Contains(m.Id));
+
+            return medicamentos.Count < quantidadeOriginal; 
+        }
         public Medicamento SelecionarRegistroPorId(int idRegistro)
         {
             return medicamentos.FirstOrDefault(m => m.Id == idRegistro);

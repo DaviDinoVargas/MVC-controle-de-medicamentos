@@ -67,6 +67,18 @@ public abstract class RepositorioBaseEmArquivo<T> where T : EntidadeBase<T>
 
         return false;
     }
+    public bool ExcluirRegistros(List<int> ids)
+    {
+        var registrosRemovidos = registros.RemoveAll(r => ids.Contains(r.Id));
+
+        if (registrosRemovidos > 0)
+        {
+            contexto.Salvar(); 
+            return true;
+        }
+
+        return false;
+    }
 
     public List<T> SelecionarRegistros()
     {

@@ -9,6 +9,6 @@ public interface IRepositorio<T> where T : EntidadeBase<T>
     public bool ExcluirRegistro(int idRegistro);
 
     public List<T> SelecionarRegistros();
-
+    bool ExcluirRegistros(List<int> ids);
     public T SelecionarRegistroPorId(int idRegistro);
 }

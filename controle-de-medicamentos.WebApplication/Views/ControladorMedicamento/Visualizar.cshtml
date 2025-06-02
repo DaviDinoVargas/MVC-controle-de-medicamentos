@@ -14,20 +14,26 @@
 
     <div class="filters-container">
         <div class="filters-left">
-            <input type="text" id="searchInput" placeholder="Pesquisar por nome..." />
-            <select id="sortFilter">
-                <option value="recent">Mais Recentes</option>
-                <option value="oldest">Mais Antigos</option>
-                <option value="valorMaior">Maior Valor</option>
-                <option value="valorMenor">Menor Valor</option>
-            </select>
-        </div>
+    <div class="search-wrapper">
+        <input type="text" id="searchInput" placeholder="Pesquisar por nome..." />
+        <span class="material-icons search-icon">search</span>
+    </div>
+
+    <select id="sortFilter">
+        <option value="" disabled selected hidden>Filtros</option>
+        <option value="recent">Mais Recentes</option>
+        <option value="oldest">Mais Antigos</option>
+        <option value="valorMaior">Maior Valor</option>
+        <option value="valorMenor">Menor Valor</option>
+    </select>
+</div>
+
 
         <div class="action-buttons">
             <a class="btn-add" href="/medicamentos/cadastrar">
                 <span class="material-icons">add</span>
             </a>
-            <a class="btn-delete" href="/medicamentos/excluirMultiplos">
+            <a class="btn-delete" href="#" onclick="return false;">
                 <span class="material-icons">delete</span>
             </a>
         </div>
@@ -37,7 +43,7 @@
         <table class="medicamentos-table">
             <thead>
                 <tr>
-                    <th><input type="checkbox" id="selectAll" disabled /></th>
+                    <th><input type="checkbox" id="selectAll"/></th>
                     <th>ID</th>
                     <th>Nome</th>
                     <th>Fornecedor</th>
@@ -107,5 +113,6 @@
         const medicamentos = @Html.Raw(dadosJson);
     </script>
     <script src="~/js/paginacaoMedicamentos.js"></script>
+    <script src="~/js/excluirMultiplos.js"></script>
     <script src="~/js/filtrarMedicamentos.js"></script>
     <script src="~/js/acaoTabelas.js"></script>

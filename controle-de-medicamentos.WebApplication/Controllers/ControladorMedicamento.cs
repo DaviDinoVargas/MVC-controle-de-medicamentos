@@ -146,5 +146,23 @@ namespace ControleDeMedicamentos.ConsoleApp.Controllers
 
             return View("Notificacao", new NotificacaoViewModel("Estoque Atualizado!", $"Estoque do medicamento \"{medicamento.Nome}\" atualizado com sucesso."));
         }
+
+        [HttpPost("excluirMultiplos")]
+        public IActionResult ExcluirMultiplos([FromBody] int[] ids)
+        {
+            try
+            {
+                bool sucesso = repositorioMedicamento.ExcluirRegistros(ids.ToList());
+
+                if (sucesso)
+                    return Json(new { success = true, message = $"{ids.Length} medicamentos excluídos com sucesso!" });
+                else
+                    return Json(new { success = false, message = "Nenhum medicamento foi excluído (IDs não encontrados)." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = $"Erro ao excluir medicamentos: {ex.Message}" });
+            }
+        }
     }
 }
