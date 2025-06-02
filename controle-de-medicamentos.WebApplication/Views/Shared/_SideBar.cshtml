@@ -8,75 +8,74 @@
             </button>
         </li>
 
-        <li class="active">
+        <li>
             <a href="/">
                 <span class="material-icons">dashboard</span>
                 <span class="menu-text">Dashboard</span>
             </a>
         </li>
 
-        <li class="menu-item has-submenu">
+        <li class="menu-item has-submenu" id="cadastros-menu">
             <button class="menu-link" onclick="toggleSubmenu(this)">
                 <span class="material-icons">app_registration</span>
                 <span class="menu-text">Cadastros</span>
                 <span class="material-icons submenu-icon">keyboard_arrow_down</span>
             </button>
             <ul class="submenu">
-                <li><a href="/fornecedores/cadastrar">Fornecedor</a></li>
-                <li><a href="#">Funcionário</a></li>
-                <li><a href="/medicamentos/cadastrar">Medicamentos</a></li>
-                <li><a href="#">Pacientes</a></li>
+                <li><a id="fornecedor-cadastrar" href="/fornecedores/cadastrar" class="submenu-item">Fornecedor</a></li>
+                <li><a id="funcionario-cadastrar" href="#" class="submenu-item">Funcionário</a></li>
+                <li><a id="medicamentos-cadastrar" href="/medicamentos/cadastrar" class="submenu-item">Medicamentos</a></li>
+                <li><a id="pacientes-cadastrar" href="#" class="submenu-item">Pacientes</a></li>
             </ul>
         </li>
 
-        <li class="menu-item has-submenu">
+        <li class="menu-item has-submenu" id="visualizacoes-menu">
             <button class="menu-link" onclick="toggleSubmenu(this)">
                 <span class="material-icons">visibility</span>
                 <span class="menu-text">Visualizações</span>
                 <span class="material-icons submenu-icon">keyboard_arrow_down</span>
             </button>
             <ul class="submenu">
-                <li><a href="/fornecedores/visualizar">Fornecedor</a></li>
-                <li><a href="#">Funcionário</a></li>
-                <li><a href="/medicamentos/visualizar">Medicamentos</a></li>
-                <li><a href="#">Pacientes</a></li>
+                <li><a id="fornecedor-visualizar" href="/fornecedores/visualizar" class="submenu-item">Fornecedor</a></li>
+                <li><a id="funcionario-visualizar" href="#" class="submenu-item">Funcionário</a></li>
+                <li><a id="medicamentos-visualizar" href="/medicamentos/visualizar" class="submenu-item">Medicamentos</a></li>
+                <li><a id="pacientes-visualizar" href="#" class="submenu-item">Pacientes</a></li>
             </ul>
         </li>
 
-        <li class="menu-item has-submenu">
+        <li class="menu-item has-submenu" id="prescricoes-menu">
             <button class="menu-link" onclick="toggleSubmenu(this)">
                 <span class="material-icons">medication</span>
                 <span class="menu-text">Prescrições</span>
                 <span class="material-icons submenu-icon">keyboard_arrow_down</span>
             </button>
             <ul class="submenu">
-                <li><a href="#">Visualizar</a></li>
-                <li><a href="#">Prescrever</a></li>
+                <li><a id="prescricoes-visualizar" href="#" class="submenu-item">Visualizar</a></li>
+                <li><a id="prescricoes-prescrever" href="#" class="submenu-item">Prescrever</a></li>
             </ul>
         </li>
 
-        <li class="menu-item has-submenu">
+        <li class="menu-item has-submenu" id="requisicoes-menu">
             <button class="menu-link" onclick="toggleSubmenu(this)">
                 <span class="material-icons">assignment</span>
                 <span class="menu-text">Requisições</span>
                 <span class="material-icons submenu-icon">keyboard_arrow_down</span>
             </button>
             <ul class="submenu">
-                <li><a href="#">Cadastrar Entrada</a></li>
-                <li><a href="#">Cadastrar Saída</a></li>
+                <li><a id="requisicoes-entrada" href="#" class="submenu-item">Cadastrar Entrada</a></li>
+                <li><a id="requisicoes-saida" href="#" class="submenu-item">Cadastrar Saída</a></li>
             </ul>
         </li>
 
-        <li class="menu-item has-submenu">
+        <li class="menu-item has-submenu" id="ia-menu">
             <button class="menu-link" onclick="toggleSubmenu(this)">
                 <span class="material-icons">smart_toy</span>
                 <span class="menu-text">IA Medicamentos</span>
                 <span class="material-icons submenu-icon">keyboard_arrow_down</span>
             </button>
             <ul class="submenu">
-                <li><a href="#">Treinar Modelo</a></li>
+                <li><a id="ia-treinar" href="#" class="submenu-item">Treinar Modelo</a></li>
             </ul>
         </li>
     </ul>
 </nav>
-

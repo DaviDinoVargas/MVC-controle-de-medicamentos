@@ -1,4 +1,5 @@
-﻿function toggleSidebar() {
+﻿
+function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const icon = document.getElementById('toggle-icon');
 
@@ -16,40 +17,6 @@
         });
     }
 }
-function toggleSubmenu(button) {
-    const item = button.closest('.menu-item');
-    const icon = button.querySelector('.submenu-icon');
-
-    item.classList.toggle('open');
-    icon.textContent = item.classList.contains('open')
-        ? 'keyboard_arrow_up'
-        : 'keyboard_arrow_down';
-}
-const breadcrumb = document.getElementById('breadcrumb');
-
-function updateBreadcrumb(...items) {
-    breadcrumb.innerHTML = '';
-    items.forEach((text, index) => {
-        const span = document.createElement('span');
-        span.className = 'breadcrumb-item';
-        span.textContent = text;
-        breadcrumb.appendChild(span);
-    });
-}
-
-document.querySelectorAll('.menu li a').forEach(link => {
-    link.addEventListener('click', e => {
-        const mainText = link.closest('.has-submenu')?.querySelector('.menu-text')?.textContent.trim();
-        const subText = link.textContent.trim();
-
-        if (mainText) updateBreadcrumb(mainText, subText);
-        else updateBreadcrumb(subText);
-    });
-});
-
-document.querySelector('.menu li.active a').addEventListener('click', () => {
-    updateBreadcrumb('Início');
-});
 
 function toggleSubmenu(button) {
     const sidebar = document.getElementById('sidebar');
@@ -65,3 +32,91 @@ function toggleSubmenu(button) {
     icon.textContent = isOpen ? 'keyboard_arrow_up' : 'keyboard_arrow_down';
 }
 
+function updateBreadcrumb(...items) {
+    const breadcrumb = document.getElementById('breadcrumb');
+    if (!breadcrumb) return;
+
+    breadcrumb.innerHTML = '';
+    items.forEach((text, index) => {
+        const span = document.createElement('span');
+        span.className = 'breadcrumb-item';
+        span.textContent = text;
+        breadcrumb.appendChild(span);
+    });
+}
+function activateCurrentMenuItem() {
+    const currentPath = window.location.pathname;
+    console.log('Current path:', currentPath);
+
+    document.querySelectorAll('.menu li, .submenu a').forEach(el => {
+        el.classList.remove('active', 'current');
+    });
+
+    const routeConfig = {
+        '/': {
+            selector: '.menu li:nth-child(2) a',
+            breadcrumb: ['Início']
+        },
+        '/medicamentos/visualizar': {
+            parentId: 'visualizacoes-menu',
+            selector: '#medicamentos-visualizar',
+            breadcrumb: ['Visualizações', 'Medicamentos']
+        },
+        '/fornecedores/visualizar': {
+            parentId: 'visualizacoes-menu',
+            selector: '#fornecedor-visualizar',
+            breadcrumb: ['Visualizações', 'Fornecedor']
+        },
+        '/medicamentos/cadastrar': {
+            parentId: 'cadastros-menu',
+            selector: '#medicamentos-cadastrar',
+            breadcrumb: ['Cadastros', 'Medicamentos']
+        },
+        '/fornecedores/cadastrar': {
+            parentId: 'cadastros-menu',
+            selector: '#fornecedor-cadastrar',
+            breadcrumb: ['Cadastros', 'Fornecedor']
+        }
+    };
+
+    const matchedRoute = Object.keys(routeConfig).find(route =>
+        currentPath.toLowerCase() === route.toLowerCase()
+    ) || '/';
+
+    const config = routeConfig[matchedRoute];
+
+    if (config.selector) {
+        const element = document.querySelector(config.selector);
+        if (element) {
+            element.classList.add('current');
+
+
+            if (config.parentId) {
+                const parentMenu = document.getElementById(config.parentId);
+                if (parentMenu) {
+                    parentMenu.classList.add('open');
+                    parentMenu.querySelector('.menu-link').classList.add('active');
+                }
+            }
+        }
+    }
+
+    updateBreadcrumb(...config.breadcrumb);
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    activateCurrentMenuItem();
+
+
+    document.querySelectorAll('.menu a').forEach(link => {
+        link.addEventListener('click', function (e) {
+
+            if (this.classList.contains('menu-link')) return;
+
+
+            setTimeout(activateCurrentMenuItem, 50);
+        });
+    });
+});
+
+window.addEventListener('load', activateCurrentMenuItem);

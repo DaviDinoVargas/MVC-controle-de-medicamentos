@@ -12,7 +12,6 @@
         const fim = inicio + itensPorPagina;
         const registros = medicamentos.slice(inicio, fim);
 
-        // Atualiza a informação de exibição
         exibicaoInfo.textContent = `Exibindo ${inicio + 1}–${Math.min(fim, medicamentos.length)} de ${medicamentos.length}`;
 
         tabelaBody.innerHTML = "";

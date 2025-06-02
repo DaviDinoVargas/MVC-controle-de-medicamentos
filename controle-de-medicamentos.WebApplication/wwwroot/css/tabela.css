@@ -93,16 +93,16 @@ main.dashboard {
 
         .medicamentos-table thead tr th:nth-child(1),
         .medicamentos-table tbody tr td:nth-child(1) {
-            width: 50px; /* ou o valor que desejar */
+            width: 5%; 
         }
 
         .medicamentos-table thead tr th:nth-child(2),
         .medicamentos-table tbody tr td:nth-child(2) {
-            width: 100px; /* ou o valor que desejar */
+            width: 10%; 
         }
         .medicamentos-table thead tr th:nth-child(6),
         .medicamentos-table tbody tr td:nth-child(6) {
-            width: 100px; /* ou o valor que desejar */
+            width: 5%; 
         }
 .status-badge {
     display: inline-block;

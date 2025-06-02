@@ -1,5 +1,5 @@
 ﻿// excluir multiplos:
-console.log("Script acaoTabelas.js carregado!"); // Verifique se aparece no console
+console.log("acaoTabelas.js carregado INFERNOOO!"); 
 
 document.addEventListener('DOMContentLoaded', function () {
     console.log("DOM totalmente carregado");
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log("Elemento btn-delete encontrado:", btnDeleteMultiplos);
 
     if (!btnDeleteMultiplos) {
-        console.error("Botão delete não encontrado! Verifique a classe no HTML");
+        console.error("Não encontrado!");
         return;
     }
 
@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log("Botão delete clicado!");
         e.preventDefault();
 
-        // Verificação mais robusta dos checkboxes
         const checkboxes = document.querySelectorAll('input[type="checkbox"].checkbox:checked');
         console.log(`Checkboxes selecionados: ${checkboxes.length}`);
 
@@ -70,7 +69,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Verificação do selectAll
     const selectAll = document.getElementById('selectAll');
     if (selectAll) {
         selectAll.addEventListener('change', function () {
